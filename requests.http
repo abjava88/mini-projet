@@ -1,0 +1,93 @@
+@baseUrl = http://localhost:5000/users
+
+### Register a new user
+POST {{baseUrl}}/register
+Content-Type: application/json
+
+{
+  "username": "testuser",
+  "password": "testpassword",
+  "role": "user"
+}
+
+### Register a new admin
+POST {{baseUrl}}/register
+Content-Type: application/json
+
+{
+  "username": "adminuser",
+  "password": "adminpassword",
+  "role": "admin"
+}
+
+### Login as user
+# @name loginUser
+# After running this, copy the 'access_token' value from the 'Set-Cookie' header
+# in the response, and paste it below.
+POST {{baseUrl}}/login
+Content-Type: application/json
+
+{
+  "username": "User1",
+  "password": "123456789"
+}
+
+### Login as admin
+# @name loginAdmin
+POST {{baseUrl}}/login
+Content-Type: application/json
+
+{
+  "username": "adminuser",
+  "password": "adminpassword"
+}
+
+
+### Add a new todo
+# @name addTodo
+POST {{baseUrl}}/todo
+Content-Type: application/json
+Cookie: access_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJhYmJlcyBib3VsZWJ0aW5hIGluYy4iLCJzdWIiOiI2OWI0M2NjZTk0YjM2MWMwOTk3NDI3ZGQiLCJpYXQiOjE3NzM0MjA0NjksImV4cCI6MTc3MzQyMjI2OX0.NIspjevjdV2H36UjcSx1ZRH2MzJx08rOAdAoBwjBTZo
+
+{
+  "name": "My first todo"
+}
+
+### Get all todos
+GET {{baseUrl}}/todos
+Cookie: access_token=<PASTE_YOUR_TOKEN_HERE>
+
+### Modify a todo
+# Note: Replace <todo_id> with an actual todo ID from the "Get all todos" response
+PATCH {{baseUrl}}/todo
+Content-Type: application/json
+Cookie: access_token=<PASTE_YOUR_TOKEN_HERE>
+
+{
+  "_id": "<todo_id>",
+  "name": "My updated todo"
+}
+
+### Delete a todo
+# Note: Replace <todo_id> with an actual todo ID
+DELETE {{baseUrl}}/todo
+Content-Type: application/json
+Cookie: access_token=<PASTE_YOUR_TOKEN_HERE>
+
+{
+  "_id": "<todo_id>"
+}
+
+
+### Check admin access (as admin)
+# Run loginAdmin first and paste the token here
+GET {{baseUrl}}/admin
+Cookie: access_token=<PASTE_YOUR_ADMIN_TOKEN_HERE>
+
+### Check admin access (as user)
+GET {{baseUrl}}/admin
+Cookie: access_token=<PASTE_YOUR_TOKEN_HERE>
+
+### Logout
+GET {{baseUrl}}/logout
+Cookie: access_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJhYmJlcyBib3VsZWJ0aW5hIGluYy4iLCJzdWIiOiI2OWI0M2NjZTk0YjM2MWMwOTk3NDI3ZGQiLCJpYXQiOjE3NzM0MjA0NjksImV4cCI6MTc3MzQyMjI2OX0.NIspjevjdV2H36UjcSx1ZRH2MzJx08rOAdAoBwjBTZo

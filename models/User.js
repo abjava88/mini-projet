@@ -43,11 +43,11 @@ UserSchema.pre('save', function(next){
 UserSchema.methods.comparePassword = function(password, cb){
     bcrypt.compare(password, this.password, (err, isMatch) => {
         if(err)
-            return cb(err);
+            return cb(err); // Error generic
         else{
             if(!isMatch)
-                return cb(null, isMatch);
-            return cb(null, this);
+                return cb(null, isMatch); // unauthorized
+            return cb(null, this); // success
         }
     });
 }

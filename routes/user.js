@@ -7,7 +7,7 @@ const Todo = require('../models/Todo');
 const JWT = require('jsonwebtoken');
 
 // generate token
-const signtoken = userId => {
+const signtoken = (userId) => {
     return JWT.sign({
         iss: 'abbes boulebtina inc.',
         sub: userId
@@ -42,6 +42,7 @@ userRouter.post('/login', passport.authenticate('local', {session: false}),(req,
         res.status(200).json({isAuthenticated: true, user: {username, role}});
 });
 
+// logout
 userRouter.get('/logout', passport.authenticate('jwt', {session: false}), (req, res) => {
     res.clearCookie('access_token');
     res.json({user: {username: "", role: ""}, success: true});
